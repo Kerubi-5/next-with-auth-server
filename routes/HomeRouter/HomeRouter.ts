@@ -2,13 +2,12 @@ import express from "express";
 const router = express.Router();
 import { HomeController } from "../../controllers";
 
+router.route("/").get(HomeController.index).post(HomeController.store);
+
 router
-  .route("/")
-  .get(HomeController.index)
-  .post(HomeController.store)
+  .route("/:id")
+  .get(HomeController.show)
   .put(HomeController.update)
   .delete(HomeController.destroy);
-
-router.get("/:id", HomeController.show);
 
 export default router;
