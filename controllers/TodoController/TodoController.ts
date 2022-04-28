@@ -2,7 +2,7 @@ import { Controller } from "../../common/controller-crud";
 import { Todo } from "../../models";
 import type { Error } from "../../common/errors";
 
-const HomeController: Controller = {
+const TodoController: Controller = {
   index: async (req, res) => {
     try {
       const todo = await Todo.find();
@@ -80,4 +80,4 @@ const HomeController: Controller = {
   },
 };
 
-export default HomeController;
+export default TodoController;
