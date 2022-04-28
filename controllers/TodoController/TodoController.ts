@@ -63,8 +63,6 @@ const HomeController: Controller = {
       const errorMessage = error.message ?? "Error in updating data";
       return res.status(400).json({ data: null, message: errorMessage });
     }
-
-    return res.json("update");
   },
   destroy: async (req, res) => {
     const id = req.params.id;

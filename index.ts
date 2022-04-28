@@ -1,7 +1,7 @@
 import express, { Application } from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import { HomeRouter } from "./routes";
+import { TodoRouter } from "./routes";
 import db from "./config/db";
 
 const main = async () => {
@@ -45,7 +45,7 @@ const main = async () => {
    *
    */
 
-  app.use("/api", HomeRouter);
+  app.use("/api", TodoRouter);
 
   app.listen(port, () => console.log(`Server started at port:${port}`));
 };

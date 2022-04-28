@@ -17,6 +17,9 @@ const TodoSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  updatedAt: {
+    type: Date,
+  },
 });
 
 const TodoModel = mongoose.model("Todo", TodoSchema);
