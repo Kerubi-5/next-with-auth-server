@@ -11,7 +11,7 @@ const TodoController: ControllerCRUD = {
         data: todo,
         message: "Succesfully get all Todo items",
       });
-    } catch (err: Error | any) {
+    } catch (err: Error) {
       const errorMessage = err.message || "Cannot get all Todo items";
       return res
         .status(err.status || 500)
@@ -29,7 +29,7 @@ const TodoController: ControllerCRUD = {
       return res
         .status(201)
         .json({ data: todo, message: "Todo created successfully" });
-    } catch (err: Error | any) {
+    } catch (err: Error) {
       const errorMessage = err.message ?? "Error in creating data";
       return res.status(400).json({ data: null, message: errorMessage });
     }
@@ -41,7 +41,7 @@ const TodoController: ControllerCRUD = {
       const todo = await Todo.findById(id);
 
       return res.json({ data: todo, message: "Succesfully get Todo item" });
-    } catch (err: Error | any) {
+    } catch (err: Error) {
       const errorMessage = err.message ?? "Error in getting Todo data";
       return res.status(400).json({ data: null, message: errorMessage });
     }
@@ -59,7 +59,7 @@ const TodoController: ControllerCRUD = {
       return res
         .status(200)
         .json({ data: todo, message: "Successfully updated" });
-    } catch (error: Error | any) {
+    } catch (error: Error) {
       const errorMessage = error.message ?? "Error in updating data";
       return res.status(400).json({ data: null, message: errorMessage });
     }
@@ -73,7 +73,7 @@ const TodoController: ControllerCRUD = {
       return res
         .status(200)
         .json({ data: todo, message: "Successfully deleted" });
-    } catch (err: Error | any) {
+    } catch (err: Error) {
       const errorMessage = err.message ?? "Error in deleting data";
       return res.status(400).json({ data: null, message: errorMessage });
     }
