@@ -7,13 +7,16 @@ const HomeController: Controller = {
     try {
       const todo = await Todo.find();
 
-      res.json({ data: todo, message: "Succesfully get all Todo items" });
+      return res.json({
+        data: todo,
+        message: "Succesfully get all Todo items",
+      });
     } catch (err: Error | any) {
       const errorMessage = err.message || "Cannot get all Todo items";
-      res.status(err.status || 500).json({ data: null, message: errorMessage });
+      return res
+        .status(err.status || 500)
+        .json({ data: null, message: errorMessage });
     }
-
-    return res.json("index");
   },
   store: async (req, res) => {
     const { title, description } = req.body;
@@ -37,13 +40,11 @@ const HomeController: Controller = {
     try {
       const todo = await Todo.findById(id);
 
-      res.json({ data: todo, message: "Succesfully get Todo item" });
+      return res.json({ data: todo, message: "Succesfully get Todo item" });
     } catch (err: Error | any) {
       const errorMessage = err.message ?? "Error in getting Todo data";
       return res.status(400).json({ data: null, message: errorMessage });
     }
-
-    return res.json({ data: id, message: "Success" });
   },
   update: async (req, res) => {
     const id = req.params.id;
