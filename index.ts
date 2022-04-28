@@ -1,7 +1,7 @@
 import express, { Application } from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import { TodoRouter } from "./routes";
+import { AuthRouter, TodoRouter } from "./routes";
 import db from "./config/db";
 
 const main = async () => {
@@ -46,6 +46,7 @@ const main = async () => {
    */
 
   app.use("/api", TodoRouter);
+  app.use("/api/auth", AuthRouter);
 
   app.listen(port, () => console.log(`Server started at port:${port}`));
 };
