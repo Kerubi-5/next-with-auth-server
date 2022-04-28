@@ -22,7 +22,9 @@ const TodoController: ControllerCRUD = {
     const { title, description } = req.body;
     try {
       if (!title || !description) {
-        return res.status(400).json({ message: "Missing credentials" });
+        return res
+          .status(400)
+          .json({ message: "title or description should be filled" });
       }
 
       const todo = await Todo.create({ title, description });

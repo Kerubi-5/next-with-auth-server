@@ -1,7 +1,9 @@
 import { Middleware } from "../common/commons";
 import { verify } from "jsonwebtoken";
 
-const secret = "secret";
+const secret = process.env.JWT_SECRET;
+
+console.log(secret);
 
 const verifyToken: Middleware = async (req, res, next) => {
   const token =

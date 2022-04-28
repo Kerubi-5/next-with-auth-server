@@ -32,7 +32,7 @@ const UserController: ControllerUSER = {
       }
 
       // HASH PASSWORD AND COMPARE
-      const hashedPW = await hashPassword(password, "salt");
+      const hashedPW = await hashPassword(password);
       const isMatch = comparePassword(hashedPW, user.password);
       if (!isMatch) {
         return res.status(401).json({ message: "Invalid credentials" });
@@ -64,7 +64,7 @@ const UserController: ControllerUSER = {
       }
 
       // HASH PASSWORD WITH CRYPTO LIB
-      const hashedPassword = await hashPassword(password, "salt");
+      const hashedPassword = await hashPassword(password);
       // CREATE JWT TOKEN
       const authToken = await generateToken({ email });
 
