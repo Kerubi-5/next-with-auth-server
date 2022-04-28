@@ -41,6 +41,16 @@ const UserController: ControllerUSER = {
       // GENERATE JWT TOKEN
       const authToken = await generateToken({ email });
 
+      // COOKIE OPTIONS
+      const cookieOptions = {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        signed: true,
+      };
+
+      // SET COOKIE IN THE BROWSER
+      res.cookie("authToken", `Bearer ${authToken}`, cookieOptions);
+
       return res.json({
         data: { token: authToken, user },
         message: "Success login",

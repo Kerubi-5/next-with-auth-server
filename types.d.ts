@@ -14,5 +14,6 @@ declare namespace NodeJS {
     MONGODB_URL: string;
     JWT_SECRET: string;
     CRYPTO_SECRET: string;
+    COOKIE_SECRET: string;
   }
 }

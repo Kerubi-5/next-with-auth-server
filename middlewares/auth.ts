@@ -5,7 +5,7 @@ import { ExceptionError } from "../common/errors";
 const secret = process.env.JWT_SECRET;
 
 const verifyToken: Middleware = async (req, res, next) => {
-  const token = req.headers.authorization;
+  const token = req.signedCookies.authToken || req.headers.authorization;
 
   if (!token) {
     return res
