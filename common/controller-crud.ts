@@ -1,6 +1,9 @@
 import { Request, Response } from "express";
 
-export type ApiFN = (req: Request, res: Response) => Promise<any>;
+export type ApiFN = (
+  req: Request,
+  res: Response
+) => Promise<Response<any, Record<string, any>>>;
 
 export type ControllerCRUD = {
   index: ApiFN;
