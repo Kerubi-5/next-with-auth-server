@@ -2,12 +2,32 @@ import express, { Application } from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import { HomeRouter } from "./routes";
+import db from "./config/db";
 
 const main = async () => {
   const app: Application = express();
   dotenv.config();
 
+  /**
+   *
+   * ENV VARIABLES
+   *
+   */
+
   const port = process.env.PORT || 8080;
+  const mongo_url = process.env.MONGODB_URL || "mongodb://localhost:27017/";
+
+  /**
+   *
+   * MONGODB CONFIGURATION
+   *
+   */
+
+  const mongoProps = {
+    mongo_url,
+  };
+
+  db(mongoProps);
 
   /**
    *
