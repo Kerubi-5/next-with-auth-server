@@ -5,11 +5,7 @@ import { ExceptionError } from "../common/errors";
 const secret = process.env.JWT_SECRET;
 
 const verifyToken: Middleware = async (req, res, next) => {
-  const token =
-    req.body.token ||
-    req.query.token ||
-    req.headers.authorization ||
-    req.headers["x-access-token"];
+  const token = req.headers.authorization;
 
   if (!token) {
     return res
@@ -18,7 +14,8 @@ const verifyToken: Middleware = async (req, res, next) => {
   }
 
   try {
-    const decoded = verify(token, secret);
+    const bearerToken = token.split(" ")[1];
+    const decoded = verify(bearerToken, secret);
 
     req.user = decoded;
     next();

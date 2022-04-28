@@ -40,9 +40,11 @@ const UserController: ControllerUSER = {
 
       // GENERATE JWT TOKEN
       const authToken = await generateToken({ email });
-      user.token = authToken;
 
-      return res.json({ data: { user }, message: "Success login" });
+      return res.json({
+        data: { token: authToken, user },
+        message: "Success login",
+      });
     } catch (err: ExceptionError) {
       const errorMessage = err.message ?? "Could not login";
       return res.status(400).json({ data: null, message: errorMessage });
