@@ -5,7 +5,10 @@ const secret = "secret";
 
 const verifyToken: Middleware = async (req, res, next) => {
   const token =
-    req.body.token || req.query.token || req.headers["x-access-token"];
+    req.body.token ||
+    req.query.token ||
+    req.headers.authorization ||
+    req.headers["x-access-token"];
 
   if (!token) {
     return res
