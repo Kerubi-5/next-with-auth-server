@@ -1,5 +1,5 @@
 import { ControllerUSER } from "../../common/controller-crud";
-import { User } from "models";
+import { User } from "../../models";
 import type { Error } from "common/errors";
 
 const UserController: ControllerUSER = {
