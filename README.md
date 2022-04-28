@@ -1,1 +1,1 @@
-# Express Typescript Boilerplate 🔥🔥🔥
+# Express Typescript backend server for TodoList 📜
