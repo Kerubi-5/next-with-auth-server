@@ -1,8 +1,8 @@
-import { Controller } from "../../common/controller-crud";
+import { ControllerCRUD } from "../../common/controller-crud";
 import { Todo } from "../../models";
 import type { Error } from "../../common/errors";
 
-const TodoController: Controller = {
+const TodoController: ControllerCRUD = {
   index: async (req, res) => {
     try {
       const todo = await Todo.find();
