@@ -1,4 +1,4 @@
-import { ControllerCRUD } from "../../common/controller-crud";
+import { ControllerCRUD } from "../../common/commons";
 import { Todo } from "../../models";
 import type { ExceptionError } from "../../common/errors";
 
@@ -22,7 +22,7 @@ const TodoController: ControllerCRUD = {
     const { title, description } = req.body;
     try {
       if (!title || !description) {
-        throw new Error("title or description is missing");
+        return res.status(400).json({ message: "Missing credentials" });
       }
 
       const todo = await Todo.create({ title, description });

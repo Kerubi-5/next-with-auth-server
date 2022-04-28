@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
 
 export type ApiFN = (
   req: Request,
@@ -21,3 +21,9 @@ export type ControllerUSER = {
   update: ApiFN;
   destroy: ApiFN;
 };
+
+export type Middleware = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => any;

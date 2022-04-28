@@ -1,56 +1,85 @@
-import { ControllerUSER } from "../../common/controller-crud";
+import { ControllerUSER } from "../../common/commons";
 import { User } from "../../models";
 import type { ExceptionError } from "common/errors";
-import hashPassword from "../../utils/crypto";
+import { hashPassword, generateToken } from "../../utils";
+
+const comparePassword = (inputPW: string, dbPW: string) => {
+  if (inputPW !== dbPW) {
+    return false;
+  }
+
+  return true;
+};
 
 const UserController: ControllerUSER = {
   index: async (req, res) => {
     try {
       const users = await User.find();
       return res.json({ data: users, message: "Success" });
-    } catch (err) {}
+    } catch (err: ExceptionError) {
+      const errorMessage = err.message ?? "Error getting all users";
+      return res.status(400).json({ data: null, error: errorMessage });
+    }
   },
   login: async (req, res) => {
+    const { email, password } = req.body;
+
     try {
-      const { email, password } = req.body;
+      // FIND IF USER EXISTS
       const user = await User.findOne({ email });
       if (!user) {
-        return res.status(400).json({ message: "User not found" });
+        return res.status(404).json({ message: "User not found" });
       }
-      const isMatch = await user.comparePassword(password);
+
+      // HASH PASSWORD AND COMPARE
+      const hashedPW = await hashPassword(password, "salt");
+      const isMatch = comparePassword(hashedPW, user.password);
       if (!isMatch) {
-        return res.status(400).json({ message: "Password is incorrect" });
+        return res.status(401).json({ message: "Invalid credentials" });
       }
-      const token = await user.generateToken();
-      return res.json({ data: { token, user }, message: "Success" });
-    } catch (err) {}
+
+      // GENERATE JWT TOKEN
+      const authToken = await generateToken({ email });
+      user.token = authToken;
+
+      return res.json({ data: { user }, message: "Success login" });
+    } catch (err: ExceptionError) {
+      const errorMessage = err.message ?? "Could not login";
+      return res.status(400).json({ data: null, message: errorMessage });
+    }
   },
   register: async (req, res) => {
     const { name, email, password } = req.body;
 
     try {
       if (!email || !password) {
-        throw new Error("Email and password are required");
+        return res.status(400).json({ message: "Missing credentials" });
       }
 
       const user = await User.findOne({ email });
 
       // CHECK IF USER EXISTS
       if (user) {
-        throw new Error("User already exists");
+        return res.status(400).json({ message: "User already exists" });
       }
 
       // HASH PASSWORD WITH CRYPTO LIB
-      const hashedPassword = hashPassword(password, "salt");
+      const hashedPassword = await hashPassword(password, "salt");
+      // CREATE JWT TOKEN
+      const authToken = await generateToken({ email });
 
       // SAVE USER INTO DATABASE
       const newUser = await User.create({
         name,
         email,
         password: hashedPassword,
+        token: authToken,
       });
 
-      return res.json({ data: { user: newUser }, message: "Success" });
+      return res.status(201).json({
+        data: { user: newUser },
+        message: "Success registration",
+      });
     } catch (err: ExceptionError) {
       const errorMessage = err.message ?? "Error in creating user";
       return res.status(400).json({ data: null, message: errorMessage });
@@ -61,7 +90,10 @@ const UserController: ControllerUSER = {
     try {
       const user = await User.findById({ _id: id });
       return res.json({ data: user, message: "Success" });
-    } catch (err) {}
+    } catch (err: ExceptionError) {
+      const errorMessage = err.message ?? "Error getting user";
+      return res.status(400).json({ data: null, error: errorMessage });
+    }
   },
   update: async (req, res) => {
     const id = req.params.id;
