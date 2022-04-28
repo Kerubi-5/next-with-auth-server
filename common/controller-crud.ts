@@ -9,3 +9,12 @@ export type ControllerCRUD = {
   update: ApiFN;
   destroy: ApiFN;
 };
+
+export type ControllerUSER = {
+  index: ApiFN;
+  register: ApiFN;
+  login: ApiFN;
+  show: ApiFN;
+  update: ApiFN;
+  destroy: ApiFN;
+};
