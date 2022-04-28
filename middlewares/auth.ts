@@ -1,5 +1,6 @@
 import { Middleware } from "../common/commons";
 import { verify } from "jsonwebtoken";
+import { ExceptionError } from "../common/errors";
 
 const secret = process.env.JWT_SECRET;
 
@@ -21,8 +22,8 @@ const verifyToken: Middleware = async (req, res, next) => {
 
     req.user = decoded;
     next();
-  } catch (error) {
-    return res.status(500).json({ message: "An error occurred" });
+  } catch (error: ExceptionError) {
+    return res.status(500).json({ message: error.message });
   }
 };
 

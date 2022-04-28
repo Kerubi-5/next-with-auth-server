@@ -9,7 +9,7 @@ const options = {
 };
 
 // GET FROM ENV SECURED SECRET
-const secret = "secret";
+const secret = process.env.JWT_SECRET;
 
 const generateToken = async (payload: IPayload) => {
   return sign(payload, secret, options);
