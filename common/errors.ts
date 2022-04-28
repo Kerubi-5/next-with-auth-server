@@ -4,4 +4,4 @@ export type ErrorType = {
   stack?: string;
 };
 
-export type Error = ErrorType | any;
+export type ExceptionError = ErrorType | any;
