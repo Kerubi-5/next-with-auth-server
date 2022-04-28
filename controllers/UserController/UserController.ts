@@ -65,15 +65,12 @@ const UserController: ControllerUSER = {
 
       // HASH PASSWORD WITH CRYPTO LIB
       const hashedPassword = await hashPassword(password);
-      // CREATE JWT TOKEN
-      const authToken = await generateToken({ email });
 
       // SAVE USER INTO DATABASE
       const newUser = await User.create({
         name,
         email,
         password: hashedPassword,
-        token: authToken,
       });
 
       return res.status(201).json({
