@@ -3,8 +3,6 @@ import { verify } from "jsonwebtoken";
 
 const secret = process.env.JWT_SECRET;
 
-console.log(secret);
-
 const verifyToken: Middleware = async (req, res, next) => {
   const token =
     req.body.token ||
